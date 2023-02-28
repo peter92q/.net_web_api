@@ -1,16 +1,19 @@
-import { Button } from "@mui/material";
+import { useState, useEffect } from "react";
 import { Product } from "../../types/product";
 import ProductList from "./ProductList";
 
-interface Props {
-  products: Product[];
-}
+const Catalogue = () => {
+  const [products, setProducts] = useState<Product[]>([])
 
-const Catalogue = ({products}: Props) => {
+  useEffect(()=>{
+    fetch('http://localhost:5000/api/products')
+      .then(response=>response.json())
+      .then(data=>setProducts(data))
+  },[])
+  
   return (
     <>
       <ProductList products={products}/>
-      <Button variant="contained">Add Product</Button>
     </>
   )
 }
